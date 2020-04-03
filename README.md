@@ -8,5 +8,5 @@ void Color(int color); //Change console color, the color is in accordance with t
 void cls(); //Clear the screen 
 bool checkOneInstance(); //Only run once, returns if the app has one instance or more
 bool kill_process();//kill a process through a handle , returns if the process has been terminated or not
-bool check_process(string& processname); //Check if a process is active or not
+bool check_process(string processname); //Check if a process is active or not
 ```
