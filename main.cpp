@@ -93,17 +93,25 @@ void Color(int color)
 bool check_process(string process)
 {
     HANDLE handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
+    if(handle == INVALID_HANDLE_VALUE)
+    return false;
     PROCESSENTRY32 entry;
     entry.dwSize = sizeof(entry);
+    if(!Process32First(handle,&entry))
+	{
+		CloseHandle(handle);
+		return false;
+	}
     while (Process32Next(handle, &entry))
     {
         if(!strcmp(entry.szExeFile,process.c_str())){
             CloseHandle(handle);
             hProcess = OpenProcess(PROCESS_ALL_ACCESS,false,entry.th32ProcessID);
-            return 1;
+            return true;
         }
     }
-    return 0;
+    CloseHandle(handle);
+    return false;
 }
 bool kill_process()
 {
